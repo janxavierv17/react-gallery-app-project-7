@@ -1,8 +1,15 @@
 import React from "react"
+import Nav from "./Components/Nav"
+import PhotoContainer from "./Components/PhotoContainer"
 
+import SearchForm from "./Components/SearchForm"
 function App() {
   return (
-    <h1>Hello ! Hi !</h1>
+    <div>
+      <SearchForm />
+      <Nav />
+      <PhotoContainer />
+    </div>
   );
 }
 
