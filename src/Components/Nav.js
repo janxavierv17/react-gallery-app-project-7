@@ -1,6 +1,6 @@
 import React from "react"
-import { Route, NavLink, Redirect } from "react-router-dom"
-import PhotoContainer from "./PhotoContainer"
+import { NavLink } from "react-router-dom"
+
 export default class Nav extends React.Component {
     render() {
         return (
