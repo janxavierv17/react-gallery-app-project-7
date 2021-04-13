@@ -9,30 +9,33 @@ export default class App extends React.Component {
     nba: [],
     anime: [],
     computers: [],
-    search: []
+    search: [],
+    userInput: ""
   }
 
   // Since nav bar are a fixed navigation. I decided to just fetch their corresponding API and store them as soon as the component mounts.
   componentDidMount() {
-    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=95adf07891e7889e7441e17700315292&tags=nba&text=nba&page=12&format=json&nojsoncallback=1")
+    this.fetchAPI();
+    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=61ec129d9055e71bc638b950a86cd8f1&tags=nba&text=nba&page=12&format=json&nojsoncallback=1")
       .then(res => res.json())
       .then(data => (this.setState({ nba: data.photos.photo })));
-    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=95adf07891e7889e7441e17700315292&tags=anime&text=anime&page=12&format=json&nojsoncallback=1")
+    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=61ec129d9055e71bc638b950a86cd8f1&tags=anime&text=anime&page=12&format=json&nojsoncallback=1")
       .then(res => res.json())
       .then(data => (this.setState({ anime: data.photos.photo })));
-    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=95adf07891e7889e7441e17700315292&tags=computers&text=computers&page=12&format=json&nojsoncallback=1")
+    fetch("https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=61ec129d9055e71bc638b950a86cd8f1&tags=computers&text=computers&page=12&format=json&nojsoncallback=1")
       .then(res => res.json())
       .then(data => (this.setState({ computers: data.photos.photo })));
-
   }
 
   // By default I set the parameter to have a value right away so when the user visits the root page it''ll just display photos.
   fetchAPI = (userInput = "programming") => {
-    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=95adf07891e7889e7441e17700315292&tags=${userInput}&text=${userInput}&page=12&format=json&nojsoncallback=1`)
+    fetch(`https://www.flickr.com/services/rest/?method=flickr.photos.search&api_key=61ec129d9055e71bc638b950a86cd8f1&tags=${userInput}&text=${userInput}&page=12&format=json&nojsoncallback=1`)
       .then(response => response.json())
-      .then(data => this.setState({ search: data.photos.photo }))
+      .then(data => this.setState({
+        userInput: userInput,
+        search: data.photos.photo
+      }))
   }
-
   render() {
     return (
       <Router >
@@ -55,7 +58,6 @@ export default class App extends React.Component {
             <Route path="/computers" render={() =>
               <PhotoContainer data={this.state.computers} />}
             />
-            <Route path="/search/:text" />
           </Switch>
         </div>
       </Router >
